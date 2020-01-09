@@ -109,9 +109,9 @@ public class TransportGraph {
         private Set<Connection> connectionSet;
 
         public Builder() {
-            lineList = new ArrayList<>();
-            stationSet = new HashSet<>();
-            connectionSet = new HashSet<>();
+            lineList = new ArrayList<Line>();
+            stationSet = new HashSet<Station>();
+            connectionSet = new HashSet<Connection>();
         }
 
         /**
@@ -122,6 +122,13 @@ public class TransportGraph {
          */
         public Builder addLine(String[] lineDefinition) {
             // TODO
+            
+            Line line = new Line(lineDefinition[1], lineDefinition[0]);
+            for (int i = 2; i < lineDefinition.length; i++) {
+                Station station = new Station(lineDefinition[i]);
+                line.addStation(station);
+            }
+
             return this;
         }
 
@@ -133,6 +140,13 @@ public class TransportGraph {
          */
         public Builder buildStationSet() {
             // TODO
+
+            for (Line line : lineList) {
+                for (Station station : line.getStationsOnLine()) {
+                    stationSet.add(station);
+                }
+            }
+
             return this;
         }
 
