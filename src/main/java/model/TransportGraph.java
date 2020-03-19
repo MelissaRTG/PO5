@@ -27,6 +27,9 @@ public class TransportGraph {
      *               The method also adds the station with it's index to the map stationIndices
      */
     public void addVertex(Station vertex) {
+
+        stationList.add(vertex);
+        //stationIndices.put((vertex, )
         // TODO
     }
 
@@ -40,6 +43,7 @@ public class TransportGraph {
      * @param to
      */
     private void addEdge(int from, int to) {
+
         // TODO
     }
 
@@ -124,17 +128,26 @@ public class TransportGraph {
          * @return
          */
         public Builder addLine(String[] lineDefinition) {
+
+
             // TODO
 
             Line line = new Line(lineDefinition[1], lineDefinition[0]);
             for (int i = 2; i < lineDefinition.length; i++) {
-                Station station = new Station(lineDefinition[i]);
-                line.addStation(station);
-            }
-            lineList.add(line);
+                for (Station stations : line.getStationsOnLine()) {
+                    if(!stationSetContains(stations)) {
+                        Station station = new Station(lineDefinition[i]);
+                        line.addStation(station);
+                    }
+                    line.addStation(stations);
 
+                }
+                lineList.add(line);
+            }
             return this;
         }
+
+
 
 
         /**
@@ -148,11 +161,19 @@ public class TransportGraph {
 
             for (Line line : lineList) {
                 for (Station station : line.getStationsOnLine()) {
+                    if(!stationSetContains(station))
                     stationSet.add(station);
                 }
             }
 
             return this;
+        }
+
+        private boolean stationSetContains(Station lookup) {
+            for(Station station : stationSet)
+                if(station.getStationName().equals(lookup.getStationName()))
+                    return true;
+                return false;
         }
 
         /**
@@ -161,15 +182,21 @@ public class TransportGraph {
          * @return
          */
         public Builder addLinesToStations() {
-            // TODO
-
-            for (Station station : stationSet) {
-                for (Line line : lineList) {
-                    if (line.getStationsOnLine().contains(station)) {
-                        station.addLine(line);
+            for (Line line : lineList) {
+                for (Station station : line.getStationsOnLine()) {
+                    station.addLine(line);
+                    for (Line otherLine : lineList) {
+                        if (!(otherLine.equals(line))) {
+                            for (Station otherStation : otherLine.getStationsOnLine()) {
+                                if (otherStation.equals(station)) {
+                                    otherStation.addLine(line);
+                                }
+                            }
+                        }
                     }
                 }
             }
+
 
             return this;
         }
@@ -180,7 +207,20 @@ public class TransportGraph {
          * @return
          */
         public Builder buildConnections() {
-            // TODO
+
+
+            for (Line line : lineList) {
+
+                for (int i = 0; i < line.getStationsOnLine().size()-1; i++) {
+                    for (Station station : line.getStationsOnLine()) {
+
+
+                    }
+                }
+
+                // TODO
+
+            }
             return this;
         }
 

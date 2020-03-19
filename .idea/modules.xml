@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PublicTransportMap.iml" filepath="$PROJECT_DIR$/PublicTransportMap.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TransportMapProject.iml" filepath="$PROJECT_DIR$/TransportMapProject.iml" />
     </modules>
   </component>
 </project>
